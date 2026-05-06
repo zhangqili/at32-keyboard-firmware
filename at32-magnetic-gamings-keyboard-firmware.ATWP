@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+    <WorkBenchVersion>
+        <Version>V1.2.02</Version>
+    </WorkBenchVersion>
+    <MCUInfo>
+        <MCUSerials>AT32F405</MCUSerials>
+        <MCUName>AT32F405RCT7-7</MCUName>
+        <MCUPackage>LQFP64</MCUPackage>
+    </MCUInfo>
+    <ADC1>
+        <Mode>
+            <ModeSub name="IN0" value="TRUE"/>
+            <ModeSub name="IN1" value="TRUE"/>
+            <ModeSub name="IN2" value="TRUE"/>
+            <ModeSub name="IN3" value="TRUE"/>
+            <ModeSub name="IN4" value="TRUE"/>
+            <ModeSub name="IN5" value="TRUE"/>
+            <ModeSub name="IN6" value="TRUE"/>
+            <ModeSub name="IN7" value="TRUE"/>
+            <ModeSub name="IN8" value="TRUE"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="NbrOfOrdinarySequence" value="9"/>
+            <ParametersSub name="Channel_OrdinarySequence_1" value="ADC_CHANNEL_0"/>
+            <ParametersSub name="SamplingRate_OrdinarySequence_1" value="1.929"/>
+            <ParametersSub name="Channel_OrdinarySequence_2" value="ADC_CHANNEL_1"/>
+            <ParametersSub name="SamplingRate_OrdinarySequence_2" value="1.929"/>
+            <ParametersSub name="Channel_OrdinarySequence_3" value="ADC_CHANNEL_2"/>
+            <ParametersSub name="SamplingRate_OrdinarySequence_3" value="1.929"/>
+            <ParametersSub name="Channel_OrdinarySequence_4" value="ADC_CHANNEL_3"/>
+            <ParametersSub name="SamplingRate_OrdinarySequence_4" value="1.929"/>
+            <ParametersSub name="Channel_OrdinarySequence_5" value="ADC_CHANNEL_4"/>
+            <ParametersSub name="SamplingRate_OrdinarySequence_5" value="1.929"/>
+            <ParametersSub name="Channel_OrdinarySequence_6" value="ADC_CHANNEL_5"/>
+            <ParametersSub name="SamplingRate_OrdinarySequence_6" value="1.929"/>
+            <ParametersSub name="Channel_OrdinarySequence_7" value="ADC_CHANNEL_6"/>
+            <ParametersSub name="SamplingRate_OrdinarySequence_7" value="1.929"/>
+            <ParametersSub name="Channel_OrdinarySequence_8" value="ADC_CHANNEL_7"/>
+            <ParametersSub name="SamplingRate_OrdinarySequence_8" value="1.929"/>
+            <ParametersSub name="Channel_OrdinarySequence_9" value="ADC_CHANNEL_8"/>
+            <ParametersSub name="SamplingRate_OrdinarySequence_9" value="1.929"/>
+        </Parameters>
+    </ADC1>
+    <CRM>
+        <Mode>
+            <ModeSub name="HEXT" value="HEXT-External-Oscillator"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="HEXT" value="HEXT_CRYSTAL"/>
+        </Parameters>
+    </CRM>
+    <DEBUG>
+        <Mode>
+            <ModeSub name="SWD" value="TRUE"/>
+            <ModeSub name="SWO" value="FALSE"/>
+        </Mode>
+    </DEBUG>
+    <EXINT>
+        <Mode>
+            <ModeSub name="EXINT15" value="TRUE"/>
+        </Mode>
+    </EXINT>
+    <SPI3>
+        <Mode>
+            <ModeSub name="Mode" value="TX_Only_Simplex_Unidirect_Master"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="TransmissionMode" value="SPI_TRANSMIT_FULL_DUPLEX"/>
+            <ParametersSub name="Mode" value="SPI_MODE_MASTER"/>
+            <ParametersSub name="FirstBit" value="SPI_FIRST_BIT_MSB"/>
+            <ParametersSub name="ClkDivision" value="SPI_MCLK_DIV_32"/>
+            <ParametersSub name="ClockFrequency" value="3375000"/>
+            <ParametersSub name="CLKPhase" value="SPI_CLOCK_PHASE_2EDGE"/>
+        </Parameters>
+    </SPI3>
+    <SYSTEM>
+        <Mode>
+            <ModeSub name="Time_Base" value="SysTick"/>
+        </Mode>
+    </SYSTEM>
+    <USB_OTGHS1>
+        <Mode>
+            <ModeSub name="Mode" value="Device_Only"/>
+        </Mode>
+    </USB_OTGHS1>
+    <DMA>
+        <ADC1>
+            <ParametersSub name="Instance" value="DMA1_Channel1"/>
+            <ParametersSub name="Priority" value="DMA_PRIORITY_HIGH"/>
+            <ParametersSub name="SyncRequestCount" value="1"/>
+            <ParametersSub name="RequestCount" value="1"/>
+            <ParametersSub name="Interrupt_FDT" value="ENABLE"/>
+            <ParametersSub name="Interrupt_HDT" value="ENABLE"/>
+        </ADC1>
+        <SPI3_TX>
+            <ParametersSub name="Instance" value="DMA1_Channel2"/>
+            <ParametersSub name="SyncRequestCount" value="1"/>
+            <ParametersSub name="RequestCount" value="1"/>
+        </SPI3_TX>
+    </DMA>
+    <NVIC>
+        <ShowType>0</ShowType>
+        <SysTick_Handler>1;15;0;0;0</SysTick_Handler>
+        <FLASH_IRQHandler>0;0;0;0;0</FLASH_IRQHandler>
+        <CRM_IRQHandler>0;0;0;0;0</CRM_IRQHandler>
+        <DMA1_Channel1_IRQHandler>1;1;0;0;0</DMA1_Channel1_IRQHandler>
+        <DMA1_Channel2_IRQHandler>1;5;0;0;0</DMA1_Channel2_IRQHandler>
+        <ADC1_IRQHandler>0;1;0;0;0</ADC1_IRQHandler>
+        <EXINT15_10_IRQHandler>1;4;0;0;0</EXINT15_10_IRQHandler>
+        <SPI3_IRQHandler>0;0;0;0;0</SPI3_IRQHandler>
+        <OTGHS_EP1_OUT_IRQHandler>0;0;0;0;0</OTGHS_EP1_OUT_IRQHandler>
+        <OTGHS_EP1_IN_IRQHandler>0;0;0;0;0</OTGHS_EP1_IN_IRQHandler>
+        <OTGHS_WKUP_IRQHandler>0;0;0;0;0</OTGHS_WKUP_IRQHandler>
+        <OTGHS_IRQHandler>1;2;0;0;0</OTGHS_IRQHandler>
+        <FPU_IRQHandler>0;0;0;0;0</FPU_IRQHandler>
+        <DMAMUX_IRQHandler>0;0;0;0;0</DMAMUX_IRQHandler>
+    </NVIC>
+    <GPIO>
+        <Signal SignalName="EXINT15" PinName="PA15">
+            <Parameters name="GPIO_PullType_Set" value="GPIO_PULL_DOWN"/>
+        </Signal>
+        <Signal SignalName="GPIO_Output" PinName="PC11">
+            <Parameters name="GPIO_Type" value="GPIO_OUTPUT_OPEN_DRAIN"/>
+            <Parameters name="Label" value="RGB_CTRL"/>
+        </Signal>
+    </GPIO>
+    <ClockConfiguration>
+        <rtcsel>0</rtcsel>
+        <rtcdiv>2</rtcdiv>
+        <hext>12.000000</hext>
+        <hextdiv>1</hextdiv>
+        <hickdiv>1</hickdiv>
+        <pllrcs>1</pllrcs>
+        <pllms>1</pllms>
+        <pllns>108</pllns>
+        <pllfp>4</pllfp>
+        <sclkselect>1</sclkselect>
+        <ahbdiv>1</ahbdiv>
+        <apb1div>2</apb1div>
+        <apb2div>1</apb2div>
+        <pllfu>18</pllfu>
+        <hicktousb>1</hicktousb>
+        <hicktosclk>0</hicktosclk>
+        <clkout>5</clkout>
+        <clkoutdiv1>1</clkoutdiv1>
+        <clkoutdiv2>1</clkoutdiv2>
+        <clkoutpinselect>0</clkoutpinselect>
+        <i2sf5clocksel>0</i2sf5clocksel>
+        <i2sf5clock>0</i2sf5clock>
+        <systicsel>8</systicsel>
+    </ClockConfiguration>
+    <PINInfo>
+        <PinSub pinname="PF0" signalname="CRM_HEXT_IN" signaltype="2"/>
+        <PinSub pinname="PF1" signalname="CRM_HEXT_OUT" signaltype="2"/>
+        <PinSub pinname="PA0" signalname="ADC1_IN0" signaltype="2"/>
+        <PinSub pinname="PA1" signalname="ADC1_IN1" signaltype="2"/>
+        <PinSub pinname="PA2" signalname="ADC1_IN2" signaltype="2"/>
+        <PinSub pinname="PA3" signalname="ADC1_IN3" signaltype="2"/>
+        <PinSub pinname="PA4" signalname="ADC1_IN4" signaltype="2"/>
+        <PinSub pinname="PA5" signalname="ADC1_IN5" signaltype="2"/>
+        <PinSub pinname="PA6" signalname="ADC1_IN6" signaltype="2"/>
+        <PinSub pinname="PA7" signalname="ADC1_IN7" signaltype="2"/>
+        <PinSub pinname="PB0" signalname="ADC1_IN8" signaltype="2"/>
+        <PinSub pinname="PB12" signalname="SPI3_SCK" signaltype="2"/>
+        <PinSub pinname="USB_OTGHS1_R" signalname="USB_OTGHS1_R" signaltype="2"/>
+        <PinSub pinname="USB_OTGHS1_D-" signalname="USB_OTGHS1_D-" signaltype="2"/>
+        <PinSub pinname="USB_OTGHS1_D+" signalname="USB_OTGHS1_D+" signaltype="2"/>
+        <PinSub pinname="PA13" signalname="DEBUG_SWDIO" signaltype="2"/>
+        <PinSub pinname="PA14" signalname="DEBUG_SWCLK" signaltype="2"/>
+        <PinSub pinname="PA15" signalname="EXINT15" signaltype="3"/>
+        <PinSub pinname="PC11" signalname="GPIO_Output" signaltype="3"/>
+        <PinSub pinname="PC12" signalname="SPI3_MOSI" signaltype="2"/>
+    </PINInfo>
+    <ProjectInfomation>
+        <ProjectName>at32-magnetic-gamings-keyboard-firmware</ProjectName>
+        <ProjectLocation>/home/xq123/Documents/git</ProjectLocation>
+        <ToolchainIDE>CMake</ToolchainIDE>
+        <ARMCompiler>0</ARMCompiler>
+        <KeepUserCode>true</KeepUserCode>
+        <NotUsedPinAnalog>false</NotUsedPinAnalog>
+        <CodeSplitIP>true</CodeSplitIP>
+        <AddNecessaryFileFlag>true</AddNecessaryFileFlag>
+        <MinHeapSize>0x200</MinHeapSize>
+        <MinStackSize>0x400</MinStackSize>
+        <UseFirmware>true</UseFirmware>
+        <PackageVersion>V2.1.4</PackageVersion>
+    </ProjectInfomation>
+</Root>
