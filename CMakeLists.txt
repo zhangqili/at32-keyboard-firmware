@@ -52,8 +52,8 @@ file(GLOB_RECURSE MY_SOURCES
     "${CMAKE_SOURCE_DIR}/libraries/CherryUSB/port/dwc2/usb_glue_at.c"
     "${CMAKE_SOURCE_DIR}/libraries/CherryUSB/port/dwc2/usb_dc_dwc2.c"
     "${CMAKE_SOURCE_DIR}/libraries/libamp/usb/template/cherryusb/usbd_user.c"
+    "${CMAKE_SOURCE_DIR}/libraries/libamp/usb/template/cherryusb/mtp/*.c"
     "${CMAKE_SOURCE_DIR}/libraries/ws2812/*.c"
-    "${CMAKE_SOURCE_DIR}/project/src/*.c"
 )
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
@@ -72,6 +72,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/libraries/CherryUSB/class/hub
     ${CMAKE_SOURCE_DIR}/libraries/CherryUSB/port/dwc2
     ${CMAKE_SOURCE_DIR}/libraries/libamp/usb/template/cherryusb
+    ${CMAKE_SOURCE_DIR}/libraries/libamp/usb/template/cherryusb/mtp
     ${CMAKE_SOURCE_DIR}/libraries/ws2812
 )
 

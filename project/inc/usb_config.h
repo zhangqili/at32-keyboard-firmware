@@ -279,4 +279,6 @@
 /* ---------------- MUSB Configuration ---------------- */
 // #define CONFIG_USB_MUSB_SUNXI
 
+#define CONFIG_USBDEV_MTP_MAX_PATHNAME 64
+
 #endif

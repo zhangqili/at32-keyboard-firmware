@@ -35,6 +35,8 @@
 #include "ws2812.h"
 #include "analog.h"
 #include "rgb.h"
+#include "usbd_mtp.h"
+
 
 /* add user code end private includes */
 
@@ -157,8 +159,12 @@ int main(void)
   while(1)
   {
     /* add user code begin 3 */
-    printf("tick: %ld, adc: %d, debug: %d\n", g_keyboard_tick, adc_dma_buffer[0], debug);
+    //printf("tick: %ld, adc: %d, debug: %d\n", g_keyboard_tick, adc_dma_buffer[0], debug);
     keyboard_process();
+
+  #ifdef MTP_ENABLE
+    usbd_mtp_task();
+  #endif
     /* add user code end 3 */
   }
 }

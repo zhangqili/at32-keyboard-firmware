@@ -1073,20 +1073,62 @@ void keyboard_user_event_handler(KeyboardEvent event)
     UNUSED(event);
 }
 
-
+#define MCU_FLASH_BASE_ADDR 0x08000000
+#define MCU_FLASH_TOTAL_SIZE  (256 * 1024)
+#define LFS_RESERVED_SIZE     LFS_BLOCK_SIZE*LFS_BLOCK_COUNT
+#define LFS_FLASH_BASE_ADDR   (MCU_FLASH_BASE_ADDR + MCU_FLASH_TOTAL_SIZE - LFS_RESERVED_SIZE)
 int flash_read(uint32_t addr, uint32_t size, uint8_t *data)
 {
-    return -1;
+    uint32_t physical_addr = LFS_FLASH_BASE_ADDR + addr;
+    memcpy(data, (void *)physical_addr, size);
+    
+    return 0; // 返回 0 表示成功
 }
 
 int flash_write(uint32_t addr, uint32_t size, const uint8_t *data)
 {
-    return -1;
+    uint32_t physical_addr = LFS_FLASH_BASE_ADDR + addr;
+    
+    // 解锁 Flash
+    flash_unlock();
+    
+    // 清除可能存在的错误标志
+    flash_flag_clear(FLASH_ODF_FLAG | FLASH_PRGMERR_FLAG | FLASH_EPPERR_FLAG);
+
+    // LittleFS 保证传进来的 size 一定是 LFS_PROG_SIZE 的整数倍
+    for (uint32_t i = 0; i < size; i += 4) {
+        // AT32 库按 32-bit (Word) 进行写入
+        uint32_t word = data[i] | (data[i+1] << 8) | (data[i+2] << 16) | (data[i+3] << 24);
+        
+        if (flash_word_program(physical_addr + i, word) != FLASH_OPERATE_DONE) {
+            flash_lock();
+            return -5; // 返回写入错误
+        }
+    }
+    
+    // 重新上锁
+    flash_lock();
+    return 0;
 }
 
 int flash_erase(uint32_t addr, uint32_t size)
 {
-    return -1;
+    uint32_t physical_addr = LFS_FLASH_BASE_ADDR + addr;
+    
+    flash_unlock();
+    flash_flag_clear(FLASH_ODF_FLAG | FLASH_PRGMERR_FLAG | FLASH_EPPERR_FLAG);
+
+    // LittleFS 保证传进来的 size 一定是 LFS_BLOCK_SIZE 的整数倍
+    // 我们按物理扇区(2KB)进行擦除
+    for (uint32_t i = 0; i < size; i += 2048) {
+        if (flash_sector_erase(physical_addr + i) != FLASH_OPERATE_DONE) {
+            flash_lock();
+            return -5;
+        }
+    }
+    
+    flash_lock();
+    return 0;
 }
 
 int led_set(uint16_t index, uint8_t r, uint8_t g, uint8_t b)

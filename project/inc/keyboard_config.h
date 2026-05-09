@@ -49,16 +49,16 @@
 /***********/
 /* Storage */
 /***********/
-//#define STORAGE_ENABLE
-//#define LFS_ENABLE
-//#define LFS_READ_SIZE       16
-//#define LFS_PROG_SIZE       16
-//#define LFS_BLOCK_SIZE      4096
-//#define LFS_BLOCK_COUNT     4096
-//#define LFS_CACHE_SIZE      16
-//#define LFS_LOOKAHEAD_SIZE  16
-//#define LFS_BLOCK_CYCLES    500
-//#define LFS_BUFFER_SIZE     16
+#define STORAGE_ENABLE
+#define LFS_ENABLE
+#define LFS_READ_SIZE       16
+#define LFS_PROG_SIZE       16
+#define LFS_BLOCK_SIZE      2048
+#define LFS_BLOCK_COUNT     32
+#define LFS_CACHE_SIZE      256
+#define LFS_LOOKAHEAD_SIZE  16
+#define LFS_BLOCK_CYCLES    500
+#define LFS_BUFFER_SIZE     16
 
 /*******/
 /* RGB */
@@ -162,8 +162,8 @@
 //#define PROGRAMMABLE_BUTTON_ENABLE
 #define MIDI_ENABLE
 #define MIDI_STREAM_EPSIZE 16
-#define MIDI_ENABLE
-#define GAMEPAD_ENABLE
+//#define MTP_ENABLE
+//#define GAMEPAD_ENABLE
 //#define LIGHTING_ENABLE
 
 /*********/
