@@ -24,12 +24,6 @@ set(WK_Application_Src
     ${CMAKE_SOURCE_DIR}/project/src/at32f402_405_wk_config.c
     ${CMAKE_SOURCE_DIR}/project/src/at32f402_405_int.c
     ${CMAKE_SOURCE_DIR}/project/src/wk_system.c
-    ${CMAKE_SOURCE_DIR}/project/src/wk_adc.c
-    ${CMAKE_SOURCE_DIR}/project/src/wk_spi.c
-    ${CMAKE_SOURCE_DIR}/project/src/wk_usb.c
-    ${CMAKE_SOURCE_DIR}/project/src/wk_dma.c
-    ${CMAKE_SOURCE_DIR}/project/src/wk_exint.c
-    ${CMAKE_SOURCE_DIR}/project/src/wk_gpio.c
     ${CMAKE_SOURCE_DIR}/startup_at32f402_405.s
 )
 
@@ -38,6 +32,7 @@ set(AT32_Drivers_Src
     ${CMAKE_SOURCE_DIR}/libraries/cmsis/cm4/device_support/system_at32f402_405.c
     ${CMAKE_SOURCE_DIR}/libraries/drivers/src/at32f402_405_crm.c
     ${CMAKE_SOURCE_DIR}/libraries/drivers/src/at32f402_405_gpio.c
+    ${CMAKE_SOURCE_DIR}/libraries/drivers/src/at32f402_405_usart.c
     ${CMAKE_SOURCE_DIR}/libraries/drivers/src/at32f402_405_pwc.c
     ${CMAKE_SOURCE_DIR}/libraries/drivers/src/at32f402_405_adc.c
     ${CMAKE_SOURCE_DIR}/libraries/drivers/src/at32f402_405_spi.c

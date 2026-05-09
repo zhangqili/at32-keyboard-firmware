@@ -101,6 +101,7 @@ void HardFault_Handler(void)
   }
 }
 
+
 /**
   * @brief  this function handles memory manage exception.
   * @param  none
@@ -203,6 +204,7 @@ void PendSV_Handler(void)
   /* add user code end PendSV_IRQ 1 */
 }
 
+
 /**
   * @brief  this function handles systick handler.
   * @param  none
@@ -300,6 +302,8 @@ void OTGHS_IRQHandler(void)
 {
   /* add user code begin OTGHS_IRQ 0 */
 
+  extern void USBD_IRQHandler(uint8_t busid);
+  USBD_IRQHandler(0);
   /* add user code end OTGHS_IRQ 0 */
 
   /* add user code begin OTGHS_IRQ 1 */

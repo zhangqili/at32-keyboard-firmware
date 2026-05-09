@@ -26,16 +26,12 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "at32f402_405_wk_config.h"
-#include "wk_adc.h"
-#include "wk_exint.h"
-#include "wk_spi.h"
-#include "wk_usb.h"
-#include "wk_dma.h"
-#include "wk_gpio.h"
 #include "wk_system.h"
 
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
+#include "usbd_user.h"
+#include "keyboard.h"
 
 /* add user code end private includes */
 
@@ -67,6 +63,10 @@
 /* private user code ---------------------------------------------------------*/
 /* add user code begin 0 */
 
+void usb_dc_low_level_init(uint8_t busid) {
+  crm_periph_clock_enable(CRM_OTGHS_PERIPH_CLOCK, TRUE);
+  nvic_irq_enable(OTGHS_IRQn, 0, 0);
+}
 /* add user code end 0 */
 
 /**
@@ -89,7 +89,9 @@ int main(void)
   /* nvic config. */
   wk_nvic_config();
 
-  /* timebase config. */
+  /* timebase config for
+     void wk_delay_us(uint32_t delay);
+     void wk_delay_ms(uint32_t delay); */
   wk_timebase_init();
 
   /* init gpio function. */
@@ -101,7 +103,8 @@ int main(void)
   /* init dma1 channel1 */
   wk_dma1_channel1_init();
   /* config dma channel transfer parameter */
-  /* user need to modify define values DMAx_CHANNELy_XXX_BASE_ADDR and DMAx_CHANNELy_BUFFER_SIZE in at32xxx_wk_config.h */
+  /* user need to modify define values DMAx_CHANNELy_XXX_BASE_ADDR 
+     and DMAx_CHANNELy_BUFFER_SIZE in at32xxx_wk_config.h */
   wk_dma_channel_config(DMA1_CHANNEL1, 
                         (uint32_t)&ADC1->odt, 
                         DMA1_CHANNEL1_MEMORY_BASE_ADDR, 
@@ -111,13 +114,17 @@ int main(void)
   /* init dma1 channel2 */
   wk_dma1_channel2_init();
   /* config dma channel transfer parameter */
-  /* user need to modify define values DMAx_CHANNELy_XXX_BASE_ADDR and DMAx_CHANNELy_BUFFER_SIZE in at32xxx_wk_config.h */
+  /* user need to modify define values DMAx_CHANNELy_XXX_BASE_ADDR 
+     and DMAx_CHANNELy_BUFFER_SIZE in at32xxx_wk_config.h */
   wk_dma_channel_config(DMA1_CHANNEL2, 
                         (uint32_t)&SPI3->dt, 
                         DMA1_CHANNEL2_MEMORY_BASE_ADDR, 
                         DMA1_CHANNEL2_BUFFER_SIZE);
   dma_channel_enable(DMA1_CHANNEL2, TRUE);
 
+  /* init usart1 function. */
+  wk_usart1_init();
+  
   /* init usb_otghs1 function. */
   wk_usb_otghs1_init();
 
@@ -128,13 +135,19 @@ int main(void)
   wk_exint_config();
 
   /* add user code begin 2 */
-
+  keyboard_init();
+  usb_init(0, OTGHS_BASE);
+  while (1)
+  {
+    printf("hello, world\n");
+  }
   /* add user code end 2 */
 
   while(1)
   {
     /* add user code begin 3 */
-
+    keyboard_task();
+    keyboard_process();
     /* add user code end 3 */
   }
 }

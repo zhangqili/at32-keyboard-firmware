@@ -29,6 +29,7 @@
 extern "C" {
 #endif
 
+#include <stdio.h>
 #include "at32f402_405.h"
 
 void wk_timebase_init(void);

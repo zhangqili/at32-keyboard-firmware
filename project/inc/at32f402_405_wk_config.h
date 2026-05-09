@@ -129,6 +129,34 @@ extern "C" {
   /* nvic config. */
   void wk_nvic_config(void);
 
+  /* init gpio function. */
+  void wk_gpio_config(void);
+
+  /* init exint function. */
+  void wk_exint_config(void);
+
+  /* init adc1 function. */
+  void wk_adc1_init(void);
+
+  /* init spi3 function. */
+  void wk_spi3_init(void);
+
+  /* init usart1 function. */
+  void wk_usart1_init(void);
+
+  /* init usb_otghs1 function. */
+  void wk_usb_otghs1_init(void);
+
+  /* init dma1 channel1 */
+  void wk_dma1_channel1_init(void);
+
+  /* init dma1 channel2 */
+  void wk_dma1_channel2_init(void);
+
+  /* config dma channel transfer parameter */
+  /* user need to modify parameters memory_base_addr and buffer_size */
+  void wk_dma_channel_config(dma_channel_type* dmax_channely, uint32_t peripheral_base_addr, uint32_t memory_base_addr, uint16_t buffer_size);
+
 /* add user code begin exported functions */
 
 /* add user code end exported functions */
