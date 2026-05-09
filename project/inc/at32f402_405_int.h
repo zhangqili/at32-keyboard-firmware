@@ -69,6 +69,7 @@ void SysTick_Handler(void);
 void DMA1_Channel1_IRQHandler(void);
 void DMA1_Channel2_IRQHandler(void);
 void EXINT15_10_IRQHandler(void);
+void TMR6_GLOBAL_IRQHandler(void);
 void OTGHS_IRQHandler(void);
 /* add user code begin exported functions */
 

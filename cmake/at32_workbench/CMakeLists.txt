@@ -31,6 +31,7 @@ set(WK_Application_Src
 set(AT32_Drivers_Src
     ${CMAKE_SOURCE_DIR}/libraries/cmsis/cm4/device_support/system_at32f402_405.c
     ${CMAKE_SOURCE_DIR}/libraries/drivers/src/at32f402_405_crm.c
+    ${CMAKE_SOURCE_DIR}/libraries/drivers/src/at32f402_405_tmr.c
     ${CMAKE_SOURCE_DIR}/libraries/drivers/src/at32f402_405_gpio.c
     ${CMAKE_SOURCE_DIR}/libraries/drivers/src/at32f402_405_usart.c
     ${CMAKE_SOURCE_DIR}/libraries/drivers/src/at32f402_405_pwc.c

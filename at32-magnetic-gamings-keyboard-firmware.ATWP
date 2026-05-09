@@ -40,6 +40,9 @@
             <ParametersSub name="SamplingRate_OrdinarySequence_8" value="1.929"/>
             <ParametersSub name="Channel_OrdinarySequence_9" value="ADC_CHANNEL_8"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_9" value="1.929"/>
+            <ParametersSub name="OrdinaryOversamplingEnable" value="TRUE"/>
+            <ParametersSub name="OversamplingShiftSelect" value="ADC_OVERSAMPLE_SHIFT_4"/>
+            <ParametersSub name="OversamplingRatioSelect" value="ADC_OVERSAMPLE_RATIO_16"/>
         </Parameters>
     </ADC1>
     <CRM>
@@ -80,6 +83,17 @@
             <ModeSub name="UART_Printf" value="USART1"/>
         </Mode>
     </SYSTEM>
+    <TMR6>
+        <Mode>
+            <ModeSub name="Activated" value="TRUE"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="Period" value="26999"/>
+        </Parameters>
+        <Interrupts>
+            <InterruptsSub name="Interrupt_OVFIF" value="TRUE"/>
+        </Interrupts>
+    </TMR6>
     <USART1>
         <Mode>
             <ModeSub name="Mode" value="Asynchronous"/>
@@ -105,6 +119,7 @@
         </ADC1>
         <SPI3_TX>
             <ParametersSub name="Instance" value="DMA1_Channel2"/>
+            <ParametersSub name="Mode" value="TRUE"/>
             <ParametersSub name="SyncRequestCount" value="1"/>
             <ParametersSub name="RequestCount" value="1"/>
         </SPI3_TX>
@@ -120,14 +135,27 @@
         <USART1_IRQHandler>0;0;0;0;0;0</USART1_IRQHandler>
         <EXINT15_10_IRQHandler>1;4;0;0;0;1</EXINT15_10_IRQHandler>
         <SPI3_IRQHandler>0;0;0;0;0;0</SPI3_IRQHandler>
+        <TMR6_GLOBAL_IRQHandler>1;2;0;0;0;1</TMR6_GLOBAL_IRQHandler>
         <OTGHS_EP1_OUT_IRQHandler>0;0;0;0;0;0</OTGHS_EP1_OUT_IRQHandler>
         <OTGHS_EP1_IN_IRQHandler>0;0;0;0;0;0</OTGHS_EP1_IN_IRQHandler>
         <OTGHS_WKUP_IRQHandler>0;0;0;0;0;0</OTGHS_WKUP_IRQHandler>
-        <OTGHS_IRQHandler>1;2;0;0;0;1</OTGHS_IRQHandler>
+        <OTGHS_IRQHandler>1;0;0;0;0;1</OTGHS_IRQHandler>
         <FPU_IRQHandler>0;0;0;0;0;0</FPU_IRQHandler>
         <DMAMUX_IRQHandler>0;0;0;0;0;1</DMAMUX_IRQHandler>
     </NVIC>
     <GPIO>
+        <Signal SignalName="GPIO_Output" PinName="PC13">
+            <Parameters name="GPIO_DriverCapability" value="GPIO_DRIVE_STRENGTH_STRONGER"/>
+            <Parameters name="Label" value="MUX_S0"/>
+        </Signal>
+        <Signal SignalName="GPIO_Output" PinName="PC14">
+            <Parameters name="GPIO_DriverCapability" value="GPIO_DRIVE_STRENGTH_STRONGER"/>
+            <Parameters name="Label" value="MUX_S1"/>
+        </Signal>
+        <Signal SignalName="GPIO_Output" PinName="PC15">
+            <Parameters name="GPIO_DriverCapability" value="GPIO_DRIVE_STRENGTH_STRONGER"/>
+            <Parameters name="Label" value="MUX_S2"/>
+        </Signal>
         <Signal SignalName="EXINT15" PinName="PA15">
             <Parameters name="GPIO_PullType_Set" value="GPIO_PULL_DOWN"/>
         </Signal>
@@ -162,6 +190,9 @@
         <systicsel>8</systicsel>
     </ClockConfiguration>
     <PINInfo>
+        <PinSub pinname="PC13" signalname="GPIO_Output" signaltype="3"/>
+        <PinSub pinname="PC14" signalname="GPIO_Output" signaltype="3"/>
+        <PinSub pinname="PC15" signalname="GPIO_Output" signaltype="3"/>
         <PinSub pinname="PF0" signalname="CRM_HEXT_IN" signaltype="2"/>
         <PinSub pinname="PF1" signalname="CRM_HEXT_OUT" signaltype="2"/>
         <PinSub pinname="PA0" signalname="ADC1_IN0" signaltype="2"/>
@@ -214,5 +245,6 @@
         <RankSub RankNum="35" FixPosFlag="FALSE" FuncName="wk_usb_otghs1_init" InstanceName="USB_OTGHS1" CodeSection="usb_otghs1 function" MainDoNotCallFlag="FALSE"/>
         <RankSub RankNum="39" FixPosFlag="FALSE" FuncName="wk_spi3_init" InstanceName="SPI3" CodeSection="spi3 function" MainDoNotCallFlag="FALSE"/>
         <RankSub RankNum="52" FixPosFlag="FALSE" FuncName="wk_exint_config" InstanceName="EXINT" CodeSection="exint function" MainDoNotCallFlag="FALSE"/>
+        <RankSub RankNum="57" FixPosFlag="FALSE" FuncName="wk_tmr6_init" InstanceName="TMR6" CodeSection="tmr6 function" MainDoNotCallFlag="FALSE"/>
     </FunctionRankInfo>
 </Root>

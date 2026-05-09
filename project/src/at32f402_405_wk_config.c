@@ -205,6 +205,9 @@ void wk_periph_clock_config(void)
   /* enable usb_otghs1 periph clock */
   crm_periph_clock_enable(CRM_OTGHS_PERIPH_CLOCK, TRUE);
 
+  /* enable tmr6 periph clock */
+  crm_periph_clock_enable(CRM_TMR6_PERIPH_CLOCK, TRUE);
+
   /* enable spi3 periph clock */
   crm_periph_clock_enable(CRM_SPI3_PERIPH_CLOCK, TRUE);
 
@@ -237,7 +240,8 @@ void wk_nvic_config(void)
   nvic_irq_enable(DMA1_Channel1_IRQn, 1, 0);
   nvic_irq_enable(DMA1_Channel2_IRQn, 5, 0);
   nvic_irq_enable(EXINT15_10_IRQn, 4, 0);
-  nvic_irq_enable(OTGHS_IRQn, 2, 0);
+  nvic_irq_enable(TMR6_GLOBAL_IRQn, 2, 0);
+  nvic_irq_enable(OTGHS_IRQn, 0, 0);
 }
 
 /**
@@ -259,7 +263,14 @@ void wk_gpio_config(void)
   /* add user code end gpio_config 1 */
 
   /* gpio output config */
-  gpio_bits_reset(RGB_CTRL_GPIO_PORT, RGB_CTRL_PIN);
+  gpio_bits_reset(GPIOC, MUX_S0_PIN | MUX_S1_PIN | MUX_S2_PIN | RGB_CTRL_PIN);
+
+  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_STRONGER;
+  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+  gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
+  gpio_init_struct.gpio_pins = MUX_S0_PIN | MUX_S1_PIN | MUX_S2_PIN;
+  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+  gpio_init(GPIOC, &gpio_init_struct);
 
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_OPEN_DRAIN;
@@ -481,6 +492,19 @@ void wk_adc1_init(void)
 
   adc_dma_mode_enable(ADC1, TRUE);
 
+  /* adc_oversampling--------------------------------------------------------------- */
+  /* set oversampling ratio and shift */
+  adc_oversample_ratio_shift_set(ADC1, ADC_OVERSAMPLE_RATIO_16, ADC_OVERSAMPLE_SHIFT_4);
+
+  /* disable ordinary oversampling trigger mode */
+  adc_ordinary_oversample_trig_enable(ADC1, FALSE);
+
+  /* set ordinary oversample restart mode */
+  adc_ordinary_oversample_restart_set(ADC1, ADC_OVERSAMPLE_CONTINUE);
+
+  /* enable ordinary oversampling */
+  adc_ordinary_oversample_enable(ADC1, TRUE);
+
   /* add user code begin adc1_init 2 */
 
   /* add user code end adc1_init 2 */
@@ -496,6 +520,39 @@ void wk_adc1_init(void)
   /* add user code begin adc1_init 3 */
 
   /* add user code end adc1_init 3 */
+}
+
+/**
+  * @brief  init tmr6 function.
+  * @param  none
+  * @retval none
+  */
+void wk_tmr6_init(void)
+{
+  /* add user code begin tmr6_init 0 */
+
+  /* add user code end tmr6_init 0 */
+
+  /* add user code begin tmr6_init 1 */
+
+  /* add user code end tmr6_init 1 */
+
+  /* configure counter settings */
+  tmr_cnt_dir_set(TMR6, TMR_COUNT_UP);
+  tmr_period_buffer_enable(TMR6, FALSE);
+  tmr_base_init(TMR6, 26999, 0);
+
+  /* configure primary mode settings */
+  tmr_primary_mode_select(TMR6, TMR_PRIMARY_SEL_RESET);
+
+  tmr_counter_enable(TMR6, TRUE);
+
+  /* enable ovfien interrupt */
+  tmr_interrupt_enable(TMR6, TMR_OVF_INT, TRUE);
+
+  /* add user code begin tmr6_init 2 */
+
+  /* add user code end tmr6_init 2 */
 }
 
 /**
@@ -621,7 +678,7 @@ void wk_dma1_channel2_init(void)
   dma_init_struct.peripheral_data_width = DMA_PERIPHERAL_DATA_WIDTH_BYTE;
   dma_init_struct.peripheral_inc_enable = FALSE;
   dma_init_struct.priority = DMA_PRIORITY_LOW;
-  dma_init_struct.loop_mode_enable = FALSE;
+  dma_init_struct.loop_mode_enable = TRUE;
   dma_init(DMA1_CHANNEL2, &dma_init_struct);
 
   /* dmamux function enable */

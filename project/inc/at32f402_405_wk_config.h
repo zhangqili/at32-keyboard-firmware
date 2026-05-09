@@ -58,8 +58,8 @@ extern "C" {
 
 /* add user code begin dma define */
 /* user can only modify the dma define value */
-#define DMA1_CHANNEL1_BUFFER_SIZE   0
-#define DMA1_CHANNEL1_MEMORY_BASE_ADDR   0
+#define DMA1_CHANNEL1_BUFFER_SIZE   18
+#define DMA1_CHANNEL1_MEMORY_BASE_ADDR   (uint32_t)adc_dma_buffer
 //#define DMA1_CHANNEL1_PERIPHERAL_BASE_ADDR  0
 
 #define DMA1_CHANNEL2_BUFFER_SIZE   0
@@ -116,6 +116,12 @@ extern "C" {
 /* add user code end dma define */
 
 /* Private defines -------------------------------------------------------------*/
+#define MUX_S0_PIN    GPIO_PINS_13
+#define MUX_S0_GPIO_PORT    GPIOC
+#define MUX_S1_PIN    GPIO_PINS_14
+#define MUX_S1_GPIO_PORT    GPIOC
+#define MUX_S2_PIN    GPIO_PINS_15
+#define MUX_S2_GPIO_PORT    GPIOC
 #define RGB_CTRL_PIN    GPIO_PINS_11
 #define RGB_CTRL_GPIO_PORT    GPIOC
 
@@ -140,6 +146,9 @@ extern "C" {
 
   /* init spi3 function. */
   void wk_spi3_init(void);
+
+  /* init tmr6 function. */
+  void wk_tmr6_init(void);
 
   /* init usart1 function. */
   void wk_usart1_init(void);

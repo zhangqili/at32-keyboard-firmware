@@ -230,6 +230,9 @@ void DMA1_Channel1_IRQHandler(void)
 {
   /* add user code begin DMA1_Channel1_IRQ 0 */
 
+  void adc_task(void);
+  adc_task();
+  return;
   /* add user code end DMA1_Channel1_IRQ 0 */
 
   if(dma_interrupt_flag_get(DMA1_FDT1_FLAG) != RESET)
@@ -291,6 +294,34 @@ void EXINT15_10_IRQHandler(void)
   /* add user code begin EXINT15_10_IRQ 1 */
 
   /* add user code end EXINT15_10_IRQ 1 */
+}
+
+/**
+  * @brief  this function handles TMR6 handler.
+  * @param  none
+  * @retval none
+  */
+void TMR6_GLOBAL_IRQHandler(void)
+{
+  /* add user code begin TMR6_GLOBAL_IRQ 0 */
+
+  tmr_flag_clear(TMR6, TMR_OVF_FLAG);
+  void main_task(void);
+  main_task();
+  /* add user code end TMR6_GLOBAL_IRQ 0 */
+
+  /* overflow interrupt management */
+  if(tmr_interrupt_flag_get(TMR6, TMR_OVF_FLAG) != RESET)
+  {
+    /* add user code begin TMR6_TMR_OVF_FLAG */
+    /* clear flag */
+    tmr_flag_clear(TMR6, TMR_OVF_FLAG);
+    /* add user code end TMR6_TMR_OVF_FLAG */
+  }
+
+  /* add user code begin TMR6_GLOBAL_IRQ 1 */
+
+  /* add user code end TMR6_GLOBAL_IRQ 1 */
 }
 
 /**

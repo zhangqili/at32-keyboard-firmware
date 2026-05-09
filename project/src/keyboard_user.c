@@ -12,6 +12,7 @@
 #include "ws2812.h"
 #include "gamepad.h"
 #include "at32f402_405.h"
+#include "at32f402_405_wk_config.h"
 
 const Keycode g_default_keymap[LAYER_NUM][TOTAL_KEY_NUM] = {
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -77,12 +78,91 @@ const uint16_t g_rgb_inverse_mapping[TOTAL_KEY_NUM] = {
 #endif
 
 #define L_UNIT_TO_UM(x,y) {UNIT_TO_UM(x), UNIT_TO_UM(y)}
-const RGBLocation g_rgb_locations[RGB_NUM]={L_UNIT_TO_UM(0.625,4.000), L_UNIT_TO_UM(1.875,4.000), L_UNIT_TO_UM(3.125,4.000), L_UNIT_TO_UM(6.875,4.000), L_UNIT_TO_UM(10.500,4.000), L_UNIT_TO_UM(11.500,4.000), L_UNIT_TO_UM(12.500,4.000), L_UNIT_TO_UM(13.500,4.000), L_UNIT_TO_UM(14.500,4.000), 
-                                            L_UNIT_TO_UM(1.000,3.000), L_UNIT_TO_UM(2.500,3.000), L_UNIT_TO_UM(3.500,3.000), L_UNIT_TO_UM(4.500,3.000), L_UNIT_TO_UM(5.500,3.000), L_UNIT_TO_UM(6.500,3.000), L_UNIT_TO_UM(7.500,3.000), L_UNIT_TO_UM(8.500,3.000), L_UNIT_TO_UM(9.500,3.000), L_UNIT_TO_UM(10.500,3.000), L_UNIT_TO_UM(11.500,3.000), L_UNIT_TO_UM(12.500,3.000), L_UNIT_TO_UM(13.500,3.000), L_UNIT_TO_UM(14.500,3.000), 
-                                            L_UNIT_TO_UM(0.875,2.000), L_UNIT_TO_UM(2.250,2.000), L_UNIT_TO_UM(3.250,2.000), L_UNIT_TO_UM(4.250,2.000), L_UNIT_TO_UM(5.250,2.000), L_UNIT_TO_UM(6.250,2.000), L_UNIT_TO_UM(7.250,2.000), L_UNIT_TO_UM(8.250,2.000), L_UNIT_TO_UM(9.250,2.000), L_UNIT_TO_UM(10.250,2.000), L_UNIT_TO_UM(11.250,2.000), L_UNIT_TO_UM(12.250,2.000), L_UNIT_TO_UM(13.875,2.000), 
-                                            L_UNIT_TO_UM(0.750,1.000), L_UNIT_TO_UM(2.000,1.000), L_UNIT_TO_UM(3.000,1.000), L_UNIT_TO_UM(4.000,1.000), L_UNIT_TO_UM(5.000,1.000), L_UNIT_TO_UM(6.000,1.000), L_UNIT_TO_UM(7.000,1.000), L_UNIT_TO_UM(8.000,1.000), L_UNIT_TO_UM(9.000,1.000), L_UNIT_TO_UM(10.000,1.000), L_UNIT_TO_UM(11.000,1.000), L_UNIT_TO_UM(12.000,1.000), L_UNIT_TO_UM(13.000,1.000), L_UNIT_TO_UM(14.250,1.000), 
-                                            L_UNIT_TO_UM(0.500,0.000), L_UNIT_TO_UM(1.500,0.000), L_UNIT_TO_UM(2.500,0.000), L_UNIT_TO_UM(3.500,0.000), L_UNIT_TO_UM(4.500,0.000), L_UNIT_TO_UM(5.500,0.000), L_UNIT_TO_UM(6.500,0.000), L_UNIT_TO_UM(7.500,0.000), L_UNIT_TO_UM(8.500,0.000), L_UNIT_TO_UM(9.500,0.000),  L_UNIT_TO_UM(10.500,0.000), L_UNIT_TO_UM(11.500,0.000), L_UNIT_TO_UM(12.500,0.000), L_UNIT_TO_UM(14.000,0.000)};
+// 索引：灯珠ID (0 ~ 67)
+// 值：坐标 L_UNIT_TO_UM(X, Y)，X 向右为正，Y 向下为正
+const RGBLocation g_rgb_locations[RGB_NUM] = {
+    /* 灯珠 0 ~ 9 */
+    L_UNIT_TO_UM(2.750, 3.000),   // 0: Z
+    L_UNIT_TO_UM(3.125, 4.000),   // 1: L_Alt
+    L_UNIT_TO_UM(3.750, 3.000),   // 2: X
+    L_UNIT_TO_UM(4.750, 3.000),   // 3: C
+    L_UNIT_TO_UM(5.750, 3.000),   // 4: V
+    L_UNIT_TO_UM(6.750, 3.000),   // 5: B
+    L_UNIT_TO_UM(6.875, 4.000),   // 6: Space
+    L_UNIT_TO_UM(7.750, 3.000),   // 7: N
+    L_UNIT_TO_UM(8.750, 3.000),   // 8: M
+    L_UNIT_TO_UM(9.750, 3.000),   // 9: , (Comma)
 
+    /* 灯珠 10 ~ 19 */
+    L_UNIT_TO_UM(10.500, 4.000),  // 10: R_Alt
+    L_UNIT_TO_UM(10.750, 3.000),  // 11: . (Dot)
+    L_UNIT_TO_UM(11.500, 4.000),  // 12: R_Meta (Fn)
+    L_UNIT_TO_UM(11.750, 3.000),  // 13: / (Slash)
+    L_UNIT_TO_UM(12.500, 4.000),  // 14: R_Ctrl
+    L_UNIT_TO_UM(13.250, 3.000),  // 15: R_Shift
+    L_UNIT_TO_UM(13.500, 4.000),  // 16: Left Arrow
+    L_UNIT_TO_UM(14.500, 4.000),  // 17: Down Arrow
+    L_UNIT_TO_UM(14.500, 3.000),  // 18: Up Arrow
+    L_UNIT_TO_UM(15.500, 4.000),  // 19: Right Arrow
+
+    /* 灯珠 20 ~ 29 */
+    L_UNIT_TO_UM(15.500, 3.000),  // 20: PageDown
+    L_UNIT_TO_UM(15.500, 2.000),  // 21: PageUp
+    L_UNIT_TO_UM(13.875, 2.000),  // 22: Enter
+    L_UNIT_TO_UM(12.250, 2.000),  // 23: ' (Apostrophe)
+    L_UNIT_TO_UM(11.250, 2.000),  // 24: ; (Semicolon)
+    L_UNIT_TO_UM(10.250, 2.000),  // 25: L
+    L_UNIT_TO_UM(9.250, 2.000),   // 26: K
+    L_UNIT_TO_UM(8.250, 2.000),   // 27: J
+    L_UNIT_TO_UM(7.250, 2.000),   // 28: H
+    L_UNIT_TO_UM(6.250, 2.000),   // 29: G
+
+    /* 灯珠 30 ~ 39 */
+    L_UNIT_TO_UM(5.250, 2.000),   // 30: F
+    L_UNIT_TO_UM(4.250, 2.000),   // 31: D
+    L_UNIT_TO_UM(3.250, 2.000),   // 32: S
+    L_UNIT_TO_UM(2.250, 2.000),   // 33: A
+    L_UNIT_TO_UM(2.000, 1.000),   // 34: Q
+    L_UNIT_TO_UM(3.000, 1.000),   // 35: W
+    L_UNIT_TO_UM(4.000, 1.000),   // 36: E
+    L_UNIT_TO_UM(5.000, 1.000),   // 37: R
+    L_UNIT_TO_UM(6.000, 1.000),   // 38: T
+    L_UNIT_TO_UM(7.000, 1.000),   // 39: Y
+
+    /* 灯珠 40 ~ 49 */
+    L_UNIT_TO_UM(8.000, 1.000),   // 40: U
+    L_UNIT_TO_UM(9.000, 1.000),   // 41: I
+    L_UNIT_TO_UM(10.000, 1.000),  // 42: O
+    L_UNIT_TO_UM(11.000, 1.000),  // 43: P
+    L_UNIT_TO_UM(12.000, 1.000),  // 44: [ (Left Brace)
+    L_UNIT_TO_UM(13.000, 1.000),  // 45: ] (Right Brace)
+    L_UNIT_TO_UM(14.250, 1.000),  // 46: \ (Backslash)
+    L_UNIT_TO_UM(15.500, 1.000),  // 47: Delete
+    L_UNIT_TO_UM(15.500, 0.000),  // 48: Insert
+    L_UNIT_TO_UM(14.000, 0.000),  // 49: Backspace
+
+    /* 灯珠 50 ~ 59 */
+    L_UNIT_TO_UM(12.500, 0.000),  // 50: =
+    L_UNIT_TO_UM(11.500, 0.000),  // 51: -
+    L_UNIT_TO_UM(10.500, 0.000),  // 52: 0
+    L_UNIT_TO_UM(9.500, 0.000),   // 53: 9
+    L_UNIT_TO_UM(8.500, 0.000),   // 54: 8
+    L_UNIT_TO_UM(7.500, 0.000),   // 55: 7
+    L_UNIT_TO_UM(6.500, 0.000),   // 56: 6
+    L_UNIT_TO_UM(5.500, 0.000),   // 57: 5
+    L_UNIT_TO_UM(4.500, 0.000),   // 58: 4
+    L_UNIT_TO_UM(3.500, 0.000),   // 59: 3
+
+    /* 灯珠 60 ~ 67 */
+    L_UNIT_TO_UM(2.500, 0.000),   // 60: 2
+    L_UNIT_TO_UM(1.500, 0.000),   // 61: 1
+    L_UNIT_TO_UM(0.500, 0.000),   // 62: ESC
+    L_UNIT_TO_UM(0.750, 1.000),   // 63: TAB
+    L_UNIT_TO_UM(0.875, 2.000),   // 64: CapsLock
+    L_UNIT_TO_UM(1.125, 3.000),   // 65: L_Shift
+    L_UNIT_TO_UM(0.625, 4.000),   // 66: L_Ctrl
+    L_UNIT_TO_UM(1.875, 4.000)    // 67: L_Meta (Win)
+};
 volatile uint8_t low_latency_mode = 0;
 
 #define L(row, col) ((row) + (col) * 9)
@@ -971,10 +1051,15 @@ void keyboard_reboot()
 #define SEL_MASK  (A_Pin | B_Pin | C_Pin | D_Pin)
 void analog_channel_select(uint8_t x)
 {
-    //x=BCD_TO_GRAY(x);
-    uint32_t set_mask = 0;
-
-
+  __IO uint32_t times = 0;  
+  gpio_bits_write(MUX_S0_GPIO_PORT, MUX_S0_PIN, (confirm_state)(x & 0x1));
+  gpio_bits_write(MUX_S1_GPIO_PORT, MUX_S1_PIN, (confirm_state)((x >> 1) & 0x1));
+  gpio_bits_write(MUX_S2_GPIO_PORT, MUX_S2_PIN, (confirm_state)((x >> 2) & 0x1));
+  
+  //for(times = 0; times < 1; times ++)
+  //{
+  //  __NOP();
+  //}
 }
 
 void keyboard_jump_to_bootloader(void)

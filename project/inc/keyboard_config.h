@@ -12,6 +12,7 @@
 #define LAYER_NUM               5
 #define ADVANCED_KEY_NUM        68
 #define KEY_NUM                 0
+#define POLLING_RATE            8000
 #define CONTINUOUS_DEBUG
 #define DEBUG_INTERVAL 0
 #define DYNAMICKEY_ENABLE
@@ -42,6 +43,7 @@
 /* Analog */
 /**********/
 #define RING_BUF_LEN            2
+#define ANALOG_BUFFER_LENGTH    72
 #define CALIBRATION_LPF_ENABLE
 
 /***********/
@@ -136,14 +138,14 @@
 /*******/
 #define USB_POLLING_INTERVAL_MS 1
 #define FIXED_CONTROL_ENDPOINT_SIZE 0x40
-#define VENDOR_ID 0xFEED
-#define PRODUCT_ID 22319
+#define VENDOR_ID 0x2E3C
+#define PRODUCT_ID 0x6040
 #define DEVICE_VER 2
 #define FIXED_NUM_CONFIGURATIONS 1
 #define USB_ENDPOINTS_ARE_REORDERABLE
 
-#define MANUFACTURER "dwdwdw5163&Lzq12345"
-#define PRODUCT "Oholeo Keyboard"
+#define MANUFACTURER "Aterty"
+#define PRODUCT "Magnetic Gaming Keyboard"
 #define SERIAL_NUMBER "2022123456"
 
 #define RAW_ENABLE
@@ -182,24 +184,5 @@
 /****************/
 /* User Defines */
 /****************/
-#define PULSE 1000
-#define PULSE_LEN_MS 40
-
-enum USER_KEYCODE {
-    USER_BEEP = 0,
-    USER_EM = 1,
-    USER_SNAKE_LAUNCH = 0x10,
-    USER_SNAKE_QUIT = 0x11,
-    USER_SNAKE_PAUSE = 0x12,
-    USER_SNAKE_SPEED_UP = 0x13,
-    USER_SNAKE_SPEED_DOWN = 0x14,
-    USER_SNAKE_RESTART = 0x15,
-    USER_SNAKE_LEFT = 0x18,
-    USER_SNAKE_UP = 0x19,
-    USER_SNAKE_RIGHT = 0x1A,
-    USER_SNAKE_DOWN = 0x1B,
-    USER_TOGGLE_LOW_LATENCY_MODE = 0x20,
-    USER_RESET = 0xFF,
-};
 
 #endif /* KEYBOARD_CONF_H_ */

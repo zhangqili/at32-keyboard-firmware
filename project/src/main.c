@@ -32,6 +32,9 @@
 /* add user code begin private includes */
 #include "usbd_user.h"
 #include "keyboard.h"
+#include "ws2812.h"
+#include "analog.h"
+#include "rgb.h"
 
 /* add user code end private includes */
 
@@ -52,7 +55,9 @@
 
 /* private variables ---------------------------------------------------------*/
 /* add user code begin private variables */
-
+volatile uint32_t debug = 0;
+static volatile bool init_flag = false;
+static uint16_t adc_dma_buffer[18];
 /* add user code end private variables */
 
 /* private function prototypes --------------------------------------------*/
@@ -124,7 +129,7 @@ int main(void)
 
   /* init usart1 function. */
   wk_usart1_init();
-  
+
   /* init usb_otghs1 function. */
   wk_usb_otghs1_init();
 
@@ -134,19 +139,25 @@ int main(void)
   /* init exint function. */
   wk_exint_config();
 
+  /* init tmr6 function. */
+  wk_tmr6_init();
+
   /* add user code begin 2 */
+  ws2812_init();
   keyboard_init();
+  adc_ordinary_software_trigger_enable(ADC1, TRUE);
+  rgb_init_flash();
+  //wk_delay_ms(100);
+  analog_calibrate();
   usb_init(0, OTGHS_BASE);
-  while (1)
-  {
-    printf("hello, world\n");
-  }
+  init_flag = true;
+  g_keyboard_config.enable_report = false;
   /* add user code end 2 */
 
   while(1)
   {
     /* add user code begin 3 */
-    keyboard_task();
+    printf("tick: %ld, adc: %d, debug: %d\n", g_keyboard_tick, adc_dma_buffer[0], debug);
     keyboard_process();
     /* add user code end 3 */
   }
@@ -154,4 +165,65 @@ int main(void)
 
   /* add user code begin 4 */
 
+void main_task(void)
+{
+  //debug++;
+  g_keyboard_tick++;
+  if (init_flag)
+  {
+    keyboard_task();
+  }
+}
+
+void adc_task(void)
+{
+  static uint32_t offset;
+  g_analog_active_channel++;
+  debug++;
+  if(g_analog_active_channel > 7) {  /* 43.04us 24kHz*/
+    /* one scan completed */
+    //p_key->adc_key.is_done = TRUE;
+    
+    /* clear multiplexer id to 0 start next scan */
+    g_analog_active_channel = 0;
+    
+    //p_key->adc_key.p_values = p_key->adc_key.adc_key_values[p_key->adc_key.id];
+
+    /* modify adc key ping pong buffer id */
+    //p_key->adc_key.id ^= 1;
+    
+  }
+  analog_channel_select(g_analog_active_channel);
+  adc_ordinary_software_trigger_enable(ADC1, TRUE);
+  if(dma_interrupt_flag_get(DMA1_FDT1_FLAG) != RESET)
+  {   
+    /* add user code begin DMA1_FDT1_FLAG */
+    /* handle full data transfer and clear flag */
+    for (int i = 0; i < 9; i++) {
+      if(offset+i < ANALOG_BUFFER_LENGTH)
+      ringbuf_push(&g_adc_ringbufs[offset+i], adc_dma_buffer[9+i]);
+    }
+    offset+=9;
+    dma_flag_clear(DMA1_FDT1_FLAG);
+    /* add user code end DMA1_FDT1_FLAG */ 
+  }
+
+  if(dma_interrupt_flag_get(DMA1_HDT1_FLAG) != RESET)
+  {   
+    /* add user code begin DMA1_HDT1_FLAG */
+    /* handle half data transfer and clear flag */
+    for (int i = 0; i < 9; i++) {
+      if(offset+i < ANALOG_BUFFER_LENGTH)
+      ringbuf_push(&g_adc_ringbufs[offset+i], adc_dma_buffer[i]);
+    }
+    offset+=9;
+    dma_flag_clear(DMA1_HDT1_FLAG);
+    /* add user code end DMA1_HDT1_FLAG */ 
+  }
+  if(g_analog_active_channel == 0)
+  {
+    /* next offset to set 0 */
+    offset = 0;
+  }
+}
   /* add user code end 4 */
