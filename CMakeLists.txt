@@ -17,7 +17,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Set the project name
-set(CMAKE_PROJECT_NAME at32-magnetic-gamings-keyboard-firmware)
+set(CMAKE_PROJECT_NAME at32-keyboard-firmware)
 
 # Include toolchain file
 include("cmake/gcc-arm-none-eabi.cmake")
@@ -39,7 +39,7 @@ add_executable(${CMAKE_PROJECT_NAME})
 add_subdirectory(cmake/at32_workbench)
 
 set(LIBAMP_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/project/inc)
-add_subdirectory(libamp)
+add_subdirectory(libraries/libamp)
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined library search paths

@@ -217,7 +217,7 @@
         <PinSub pinname="PC12" signalname="SPI3_MOSI" signaltype="2"/>
     </PINInfo>
     <ProjectInfomation>
-        <ProjectName>at32-magnetic-gamings-keyboard-firmware</ProjectName>
+        <ProjectName>at32-keyboard-firmware</ProjectName>
         <ProjectLocation>/home/xq123/Documents/git</ProjectLocation>
         <ToolchainIDE>CMake</ToolchainIDE>
         <ARMCompiler>0</ARMCompiler>

@@ -212,12 +212,13 @@
 #endif
 
 /* When your chip hardware supports high-speed and wants to initialize it in high-speed mode, the relevant IP will configure the internal or external high-speed PHY according to CONFIG_USB_HS. */
-// #define CONFIG_USB_HS
+#define CONFIG_USB_HS
 
 /* ---------------- FSDEV Configuration ---------------- */
 //#define CONFIG_USBDEV_FSDEV_PMA_ACCESS 2 // maybe 1 or 2, many chips may have a difference
 
 /* ---------------- DWC2 Configuration ---------------- */
+#define CONFIG_USB_DWC2_CUSTOM_FIFO
 /* (5 * number of control endpoints + 8) + ((largest USB packet used / 4) + 1 for
  * status information) + (2 * number of OUT endpoints) + 1 for Global NAK
  */
@@ -279,6 +280,6 @@
 /* ---------------- MUSB Configuration ---------------- */
 // #define CONFIG_USB_MUSB_SUNXI
 
-#define CONFIG_USBDEV_MTP_MAX_PATHNAME 64
+#define CONFIG_USBDEV_MTP_MAX_PATHNAME 256
 
 #endif

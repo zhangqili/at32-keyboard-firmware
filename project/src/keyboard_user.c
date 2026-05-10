@@ -1062,10 +1062,76 @@ void analog_channel_select(uint8_t x)
   //}
 }
 
+void (*SysMemBootJump)(void);
+__IO uint32_t BootAddr = 0x1FFFA400; /* BootLoader 地址 */
 void keyboard_jump_to_bootloader(void)
 {
-    //void JumpToBootloader(void);
-    //JumpToBootloader();
+    /*Close Peripherals Clock*/
+    CRM->apb2rst = 0xFFFF;
+    CRM->apb2rst = 0;
+    CRM->apb1rst = 0xFFFF;
+    CRM->apb1rst = 0;
+    CRM->apb1en = 0;
+    CRM->apb2en = 0;
+    /*Close PLL*/
+    /* Reset SW, AHBDIV, APB1DIV, APB2DIV, ADCDIV and CLKOUT_SEL bits */
+    CRM->ctrl_bit.hexten = 0;
+    CRM->ctrl_bit.cfden = 0;
+    CRM->ctrl_bit.pllen = 0;
+    CRM->cfg_bit.sclksel = 0;
+    CRM->cfg_bit.sclksts = 0;
+    CRM->cfg_bit.ahbdiv = 0;
+    //CRM->cfg_bit.reserved1 = 0;
+    CRM->cfg_bit.apb1div = 0;
+    CRM->cfg_bit.apb2div = 0;
+    CRM->cfg_bit.ertcdiv = 0;
+    //CRM->cfg_bit.reserved2 = 0;
+    CRM->cfg_bit.i2sf5clksel = 0;
+    CRM->cfg_bit.reserved3 = 0;
+    //CRM->cfg_bit.clkoutdiv1 = 0;
+    CRM->cfg_bit.clkout_sel1 = 0;
+    /* Disable all interrupts and clear pending bits */
+    CRM->clkint_bit.lickstblfc = 0;
+    CRM->clkint_bit.lextstblfc = 0;
+    CRM->clkint_bit.hickstblfc = 0;
+    CRM->clkint_bit.hextstblfc = 0;
+    CRM->clkint_bit.pllstblfc = 0;
+    CRM->clkint_bit.cfdfc = 0;
+    
+  uint32_t i = 0;
+
+  /* 关闭全局中断 */
+  __set_PRIMASK(1);
+  __disable_irq();
+
+  /* 关闭滴答定时器，复位到默认值 */
+  SysTick->CTRL = 0;
+  SysTick->LOAD = 0;
+  SysTick->VAL = 0;
+
+  /* 关闭所有中断，清除所有中断挂起标志 */
+  for (i = 0; i < 8; i++)
+  {
+    NVIC->ICER[i] = 0xFFFFFFFF;
+    NVIC->ICPR[i] = 0xFFFFFFFF;
+  }
+
+  /* 使能全局中断 */
+  __set_PRIMASK(0);
+
+  /* 跳转到系统BootLoader，首地址是MSP，地址+4是复位中断服务程序地址 */
+  SysMemBootJump = (void (*)(void))(*((uint32_t *)(BootAddr + 4)));
+
+  /* 设置主堆栈指针 */
+  __set_MSP(*(uint32_t *)BootAddr);
+
+  /* 跳转到系统BootLoader */
+  SysMemBootJump();
+
+  /* 跳转成功的话，不会执行到这里，用户可以在这里添加代码 */
+  while (1)
+  {
+  }
 }
 
 void keyboard_user_event_handler(KeyboardEvent event)
