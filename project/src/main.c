@@ -153,7 +153,7 @@ int main(void)
   analog_calibrate();
   usb_init(0, OTGHS_BASE);
   init_flag = true;
-  g_keyboard_config.enable_report = false;
+  //g_keyboard_config.enable_report = false;
   /* add user code end 2 */
 
   while(1)
@@ -181,34 +181,21 @@ void main_task(void)
   }
 }
 
+volatile uint16_t adc_buffer[72];
+
 void adc_task(void)
 {
   static uint32_t offset;
-  g_analog_active_channel++;
-  debug++;
-  if(g_analog_active_channel > 7) {  /* 43.04us 24kHz*/
-    /* one scan completed */
-    //p_key->adc_key.is_done = TRUE;
-    
-    /* clear multiplexer id to 0 start next scan */
-    g_analog_active_channel = 0;
-    
-    //p_key->adc_key.p_values = p_key->adc_key.adc_key_values[p_key->adc_key.id];
-
-    /* modify adc key ping pong buffer id */
-    //p_key->adc_key.id ^= 1;
-    
-  }
-  analog_channel_select(g_analog_active_channel);
-  adc_ordinary_software_trigger_enable(ADC1, TRUE);
   if(dma_interrupt_flag_get(DMA1_FDT1_FLAG) != RESET)
   {   
-    /* add user code begin DMA1_FDT1_FLAG */
-    /* handle full data transfer and clear flag */
-    for (int i = 0; i < 9; i++) {
-      if(offset+i < ANALOG_BUFFER_LENGTH)
-      ringbuf_push(&g_adc_ringbufs[offset+i], adc_dma_buffer[9+i]);
+    g_analog_active_channel++;
+    debug++;
+    if(g_analog_active_channel > 7) {
+      g_analog_active_channel = 0;
     }
+    analog_channel_select(g_analog_active_channel);
+    adc_ordinary_software_trigger_enable(ADC1, TRUE);
+    memcpy(&adc_buffer[offset], &adc_dma_buffer[9], 18);
     offset+=9;
     dma_flag_clear(DMA1_FDT1_FLAG);
     /* add user code end DMA1_FDT1_FLAG */ 
@@ -216,20 +203,26 @@ void adc_task(void)
 
   if(dma_interrupt_flag_get(DMA1_HDT1_FLAG) != RESET)
   {   
-    /* add user code begin DMA1_HDT1_FLAG */
-    /* handle half data transfer and clear flag */
-    for (int i = 0; i < 9; i++) {
-      if(offset+i < ANALOG_BUFFER_LENGTH)
-      ringbuf_push(&g_adc_ringbufs[offset+i], adc_dma_buffer[i]);
+    g_analog_active_channel++;
+    debug++;
+    if(g_analog_active_channel > 7) {
+      g_analog_active_channel = 0;
     }
+    analog_channel_select(g_analog_active_channel);
+    adc_ordinary_software_trigger_enable(ADC1, TRUE);
+    memcpy(&adc_buffer[offset], &adc_dma_buffer[0], 18);
     offset+=9;
     dma_flag_clear(DMA1_HDT1_FLAG);
     /* add user code end DMA1_HDT1_FLAG */ 
   }
   if(g_analog_active_channel == 0)
   {
-    /* next offset to set 0 */
     offset = 0;
   }
+}
+
+AnalogRawValue advanced_key_read_raw(AdvancedKey *advanced_key)
+{
+    return adc_buffer[g_analog_map[advanced_key->key.id]];
 }
   /* add user code end 4 */

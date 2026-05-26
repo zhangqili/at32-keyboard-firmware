@@ -41,8 +41,6 @@
             <ParametersSub name="Channel_OrdinarySequence_9" value="ADC_CHANNEL_8"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_9" value="1.929"/>
             <ParametersSub name="OrdinaryOversamplingEnable" value="TRUE"/>
-            <ParametersSub name="OversamplingShiftSelect" value="ADC_OVERSAMPLE_SHIFT_4"/>
-            <ParametersSub name="OversamplingRatioSelect" value="ADC_OVERSAMPLE_RATIO_16"/>
         </Parameters>
     </ADC1>
     <CRM>

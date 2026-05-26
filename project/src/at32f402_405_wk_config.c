@@ -494,7 +494,7 @@ void wk_adc1_init(void)
 
   /* adc_oversampling--------------------------------------------------------------- */
   /* set oversampling ratio and shift */
-  adc_oversample_ratio_shift_set(ADC1, ADC_OVERSAMPLE_RATIO_16, ADC_OVERSAMPLE_SHIFT_4);
+  adc_oversample_ratio_shift_set(ADC1, ADC_OVERSAMPLE_RATIO_4, ADC_OVERSAMPLE_SHIFT_0);
 
   /* disable ordinary oversampling trigger mode */
   adc_ordinary_oversample_trig_enable(ADC1, FALSE);
